@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">Confirmar Eliminación</h4>
+            </div>
+            <div class="card-body text-center">
+                <h5>¿Está seguro que desea eliminar la factura?</h5>
+                <p class="lead">Factura #{{ factura.id }}</p>
+                <p><strong>Cliente:</strong> {{ factura.id_cliente.nombre }} {{ factura.id_cliente.apellido }}</p>
+                <p><strong>Proyecto:</strong> {{ factura.id_proyecto.nombre }}</p>
+                <p><strong>Total:</strong> ${{ factura.factura_total }}</p>
+                <p><strong>Fecha:</strong> {{ factura.fecha_emision }}</p>
+                
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                        <a href="{% url 'ver_facturas' %}" class="btn btn-secondary me-md-2">Cancelar</a>
+                        <button type="submit" class="btn btn-danger">Confirmar Eliminación</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+        <h4 class="mb-0">Lista de Maquinaria</h4>
+        <a href="{% url 'agregar_maquinaria' %}" class="btn btn-light">➕ Agregar Maquinaria</a>
+    </div>
+    <div class="card-body">
+        {% if maquinarias %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>N° Serie</th>
+                        <th>Fecha Adq.</th>
+                        <th>Horas Uso</th>
+                        <th>Empleado</th>
+                        <th>Cantidad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for maquinaria in maquinarias %}
+                    <tr>
+                        <td>{{ maquinaria.nombre }}</td>
+                        <td>{{ maquinaria.marca }}</td>
+                        <td>{{ maquinaria.modelo }}</td>
+                        <td>{{ maquinaria.num_serie }}</td>
+                        <td>{{ maquinaria.fecha_adq }}</td>
+                        <td>{{ maquinaria.horas_uso }}</td>
+                        <td>{{ maquinaria.id_empleado.nombre }}</td>
+                        <td>{{ maquinaria.cantidad }}</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a href="{% url 'actualizar_maquinaria' maquinaria.id %}" class="btn btn-warning btn-sm">✏️ Editar</a>
+                                <a href="{% url 'borrar_maquinaria' maquinaria.id %}" class="btn btn-danger btn-sm">🗑️ Borrar</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info text-center">
+            <h5>No hay maquinaria registrada</h5>
+            <p>Comienza agregando la primera maquinaria al sistema.</p>
+            <a href="{% url 'agregar_maquinaria' %}" class="btn btn-secondary">Agregar Primera Maquinaria</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

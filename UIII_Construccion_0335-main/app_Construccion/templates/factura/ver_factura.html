@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+        <h4 class="mb-0">Lista de Facturas Generadas</h4>
+        <small class="text-light">Las facturas se generan automáticamente desde los proyectos</small>
+    </div>
+    <div class="card-body">
+        {% if facturas %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID Factura</th>
+                        <th>Proyecto</th>
+                        <th>Cliente</th>
+                        <th>Empleado Responsable</th>
+                        <th>Total</th>
+                        <th>Fecha Emisión</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for factura in facturas %}
+                    <tr>
+                        <td><strong>#{{ factura.id }}</strong></td>
+                        <td>{{ factura.id_proyecto.nombre }}</td>
+                        <td>{{ factura.id_cliente.nombre }} {{ factura.id_cliente.apellido }}</td>
+                        <td>{{ factura.id_empleado.nombre }} {{ factura.id_empleado.apellido }}</td>
+                        <td><strong>${{ factura.factura_total }}</strong></td>
+                        <td>{{ factura.fecha_emision }}</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a href="{% url 'actualizar_factura' factura.id %}" class="btn btn-warning btn-sm">✏️ Editar</a>
+                                <a href="{% url 'borrar_factura' factura.id %}" class="btn btn-danger btn-sm">🗑️ Borrar</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info text-center">
+            <h5>No hay facturas generadas</h5>
+            <p>Las facturas se generan automáticamente cuando creas o actualizas proyectos con un total de factura mayor a $0.</p>
+            <a href="{% url 'agregar_proyecto' %}" class="btn btn-dark">Crear Proyecto con Factura</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

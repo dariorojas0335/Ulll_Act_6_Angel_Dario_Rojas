@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-warning text-dark">
+                <h4 class="mb-0">Actualizar Maquinaria</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" value="{{ maquinaria.nombre }}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="marca" class="form-label">Marca</label>
+                            <input type="text" class="form-control" id="marca" name="marca" value="{{ maquinaria.marca }}" required>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="modelo" class="form-label">Modelo</label>
+                            <input type="text" class="form-control" id="modelo" name="modelo" value="{{ maquinaria.modelo }}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="num_serie" class="form-label">Número de Serie</label>
+                            <input type="text" class="form-control" id="num_serie" name="num_serie" value="{{ maquinaria.num_serie }}" required>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="fecha_adq" class="form-label">Fecha de Adquisición</label>
+                            <input type="date" class="form-control" id="fecha_adq" name="fecha_adq" value="{{ maquinaria.fecha_adq|date:'Y-m-d' }}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="horas_uso" class="form-label">Horas de Uso</label>
+                            <input type="number" class="form-control" id="horas_uso" name="horas_uso" value="{{ maquinaria.horas_uso }}" required>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="id_empleado" class="form-label">Empleado Responsable</label>
+                            <select class="form-select" id="id_empleado" name="id_empleado" required>
+                                <option value="">Seleccionar Empleado</option>
+                                {% for empleado in empleados %}
+                                <option value="{{ empleado.id }}" {% if empleado.id == maquinaria.id_empleado.id %}selected{% endif %}>
+                                    {{ empleado.nombre }} {{ empleado.apellido }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="cantidad" class="form-label">Cantidad</label>
+                            <input type="number" class="form-control" id="cantidad" name="cantidad" value="{{ maquinaria.cantidad }}" required>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{% url 'ver_maquinarias' %}" class="btn btn-secondary me-md-2">Cancelar</a>
+                        <button type="submit" class="btn btn-warning">Actualizar Maquinaria</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

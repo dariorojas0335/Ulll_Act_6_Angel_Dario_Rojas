@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-warning text-dark">
+                <h4 class="mb-0">Actualizar Factura</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="id_cliente" class="form-label">Cliente</label>
+                            <select class="form-select" id="id_cliente" name="id_cliente" required>
+                                <option value="">Seleccionar Cliente</option>
+                                {% for cliente in clientes %}
+                                <option value="{{ cliente.id }}" {% if cliente.id == factura.id_cliente.id %}selected{% endif %}>
+                                    {{ cliente.nombre }} {{ cliente.apellido }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="id_empleado" class="form-label">Empleado</label>
+                            <select class="form-select" id="id_empleado" name="id_empleado" required>
+                                <option value="">Seleccionar Empleado</option>
+                                {% for empleado in empleados %}
+                                <option value="{{ empleado.id }}" {% if empleado.id == factura.id_empleado.id %}selected{% endif %}>
+                                    {{ empleado.nombre }} {{ empleado.apellido }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="id_proyecto" class="form-label">Proyecto</label>
+                            <select class="form-select" id="id_proyecto" name="id_proyecto" required>
+                                <option value="">Seleccionar Proyecto</option>
+                                {% for proyecto in proyectos %}
+                                <option value="{{ proyecto.id }}" {% if proyecto.id == factura.id_proyecto.id %}selected{% endif %}>
+                                    {{ proyecto.nombre }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="factura_total" class="form-label">Total Factura</label>
+                            <input type="number" step="0.01" class="form-control" id="factura_total" name="factura_total" value="{{ factura.factura_total }}" required>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{% url 'ver_facturas' %}" class="btn btn-secondary me-md-2">Cancelar</a>
+                        <button type="submit" class="btn btn-warning">Actualizar Factura</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
